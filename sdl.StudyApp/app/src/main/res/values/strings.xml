@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">sdl.StudyApp</string>
+    <string name="app_name">StudyApp</string>
+    <string name="mainmenu_title">K先生</string>
+    <string name="mainmenu_prepare">予習</string>
+    <string name="mainmenu_review">復習</string>
+    <string name="review_title">復習</string>
+    <string name="prepare_title">予習</string>
 </resources>

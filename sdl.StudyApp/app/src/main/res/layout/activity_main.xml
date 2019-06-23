@@ -8,10 +8,9 @@
 
     <TextView
         android:id="@+id/Title"
-        android:name="title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="K sensei"
+        android:text="@string/mainmenu_title"
         app:layout_constraintBottom_toTopOf="@id/Prepare"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,26 +19,24 @@
 
     <Button
         android:id="@+id/Prepare"
-        android:name="prepare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="予習"
+        android:text="@string/mainmenu_prepare"
         app:layout_constraintBottom_toTopOf="@id/Review"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Prepare"
+        app:layout_constraintTop_toBottomOf="@+id/Title"
         />
 
     <Button
         android:id="@+id/Review"
-        android:name="review"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="復習"
+        android:text="@string/mainmenu_review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Review"
+        app:layout_constraintTop_toBottomOf="@+id/Prepare"
         />
 
 </android.support.constraint.ConstraintLayout>
