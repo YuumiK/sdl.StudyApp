@@ -5,4 +5,8 @@
     <string name="mainmenu_review">復習</string>
     <string name="review_title">復習</string>
     <string name="prepare_title">予習</string>
+    <string name="add_review">+</string>
+    <string name="instruction_add">新規の間違いタイプを入れましょう</string>
+    <string name="hint_add">間違いタイプ</string>
+    <string name="OK_add">OK</string>
 </resources>
