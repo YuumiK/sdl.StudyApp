@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,8 +24,8 @@ public class ReviewActivity extends AppCompatActivity {
 
     private final static int REQ_NEW_TITLE = 1234;
 
-    ArrayList<String> items;
-    ArrayAdapter<String> adapter;
+    ArrayList<Miss> items;
+    BaseAdapter adapter;
     private MissDBAdapter dbAdapter;
 
     private Button add;
@@ -50,35 +52,15 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
-    }
-    private void setListView(){
-        dbAdapter.openDB();
-        items = new ArrayList<>();
-
-        //obtain DB data
-        String[] cols = {MissesOpenHelper.COLUMN_NAME_TITLE};
-        Cursor c = dbAdapter.getDB(cols);
-
-        if(c.moveToFirst()){
-            do{
-                items.add(c.getString(0));
-                Log.d("Cursor:", c.getString(0));
-            }while (c.moveToNext());
-        }
-        c.close();
-        dbAdapter.closeDB();
-
-
-        //settings of ListView
-        // simple_list_item_1 は、 もともと用意されている定義済みのレイアウトファイルのID
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
-        listView.setAdapter(adapter);//表示
-
         //リスト項目が選択された時
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String str = items.get(position);
-
+                String name = items.get(position).title;
+                int count = items.get(position).count + 1;
+                dbAdapter.openDB();
+                dbAdapter.update(name, count);
+                dbAdapter.closeDB();
+                setListView();
             }
         });
 
@@ -90,6 +72,35 @@ public class ReviewActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+    private void setListView(){
+        dbAdapter.openDB();
+        items = new ArrayList<>();
+
+        //obtain DB data
+        String[] cols = null;
+        Cursor c = dbAdapter.getDB(cols);
+
+        if(c.moveToFirst()){
+            do{
+                Miss m = new Miss(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getInt(2)
+                        );
+                items.add(m);
+            }while (c.moveToNext());
+        }
+        c.close();
+        dbAdapter.closeDB();
+
+
+        //settings of ListView
+        adapter = new MissAdapter(this, items);
+        listView.setAdapter(adapter);//表示
+
+
     }
 
     @Override
