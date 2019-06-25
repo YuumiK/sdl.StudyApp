@@ -42,7 +42,6 @@ public class ReviewActivity extends AppCompatActivity {
         dbAdapter = new MissDBAdapter(this);
         setListView();
 
-        if(add == null) Log.d("Button", "null");
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,8 +98,6 @@ public class ReviewActivity extends AppCompatActivity {
         //settings of ListView
         adapter = new MissAdapter(this, items);
         listView.setAdapter(adapter);//表示
-
-
     }
 
     @Override

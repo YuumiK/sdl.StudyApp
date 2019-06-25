@@ -9,4 +9,5 @@
     <string name="instruction_add">新規の間違いタイプを入れましょう</string>
     <string name="hint_add">間違いタイプ</string>
     <string name="OK_add">OK</string>
+    <string name="add_prepare">+</string>
 </resources>
