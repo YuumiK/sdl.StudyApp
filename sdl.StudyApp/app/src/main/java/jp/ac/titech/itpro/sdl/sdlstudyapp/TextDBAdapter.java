@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
+import java.util.Locale;
 
 public class TextDBAdapter {
 
@@ -59,12 +60,10 @@ public class TextDBAdapter {
      * saveDB()
      *
      * @param title 名称
-     * @param pict_uri 写真
      * @param text 文章
      * @param time 時間
-     * @param r Rect
      */
-    public void saveDB(String title, Uri pict_uri, String text, int time, Rect r) {
+    public void saveDB(String title, String text, int time) {
 
 
         db.beginTransaction();          // トランザクション開始
@@ -72,14 +71,11 @@ public class TextDBAdapter {
         try {
             ContentValues values = new ContentValues();     // ContentValuesでデータを設定していく
             values.put(TextsOpenHelper.COLUMN_NAME_TITLE, title);
-            values.put(TextsOpenHelper.COLUMN_NAME_PICTURE, pict_uri.toString());
+            Log.d("saveDB", title);
             values.put(TextsOpenHelper.COLUMN_NAME_TEXT, text);
-            values.put(TextsOpenHelper.COLUMN_NAME_STARTX, r.left);
-            values.put(TextsOpenHelper.COLUMN_NAME_STARTY, r.top);
-            values.put(TextsOpenHelper.COLUMN_NAME_ENDX, r.right);
-            values.put(TextsOpenHelper.COLUMN_NAME_ENDY, r.bottom);
+            Log.d("saveDB", text);
             values.put(TextsOpenHelper.COLUMN_NAME_TIME, time);
-
+            Log.d("saveDB", Integer.toString(time));
             //重複がないか検索
             Cursor c = searchDB(null, TextsOpenHelper.COLUMN_NAME_TITLE, new String[]{title});
             if(!c.moveToFirst()) {
@@ -92,6 +88,7 @@ public class TextDBAdapter {
             else throw new Exception("Overlapping");
             db.setTransactionSuccessful();      // トランザクションへコミット
             Log.d("saveDB", "successful");
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

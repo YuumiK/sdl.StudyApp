@@ -28,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -50,7 +51,7 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
     TextAdapter adapter;
     private TextDBAdapter dbAdapter;
 
-    private GridView gridView;
+    private ListView listView;
     private Button add;
 
     //URI of photo obtained
@@ -64,13 +65,7 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
         Intent intent = new Intent(PrepareActivity.this, ViewPrepareActivity.class);
         Text selected = items.get(position);
         intent.putExtra(TextsOpenHelper.COLUMN_NAME_TITLE, selected.getTitle());
-        intent.putExtra("image_URI", selected.getPictsUri().toString());
         intent.putExtra(TextsOpenHelper.COLUMN_NAME_TEXT, selected.getText());
-        Rect textRect = selected.getRect();
-        intent.putExtra(TextsOpenHelper.COLUMN_NAME_STARTX,textRect.left);
-        intent.putExtra(TextsOpenHelper.COLUMN_NAME_STARTY,textRect.top);
-        intent.putExtra(TextsOpenHelper.COLUMN_NAME_ENDX,textRect.right);
-        intent.putExtra(TextsOpenHelper.COLUMN_NAME_ENDY,textRect.bottom);
         intent.putExtra(TextsOpenHelper.COLUMN_NAME_TIME, selected.getTime());
         startActivity(intent);
     }
@@ -79,13 +74,13 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prepare);
-        gridView = findViewById(R.id.grid_prepare);
+        listView = findViewById(R.id.grid_prepare);
         add = findViewById(R.id.add_prepare);
 
         dbAdapter = new TextDBAdapter(this);
         setGridView();
 
-        gridView.setOnItemClickListener(this);
+        listView.setOnItemClickListener(this);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,10 +105,8 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
                 Text t = new Text(
                         c.getInt(0),
                         c.getString(1),
-                        Uri.parse(c.getString(2)),
-                        c.getString(3),
-                        new Rect(c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7)),
-                        c.getInt(8)
+                        c.getString(2),
+                        c.getInt(3)
                 );
                 items.add(t);
             } while (c.moveToNext());
@@ -124,7 +117,7 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
 
         //settings of GridView
         adapter = new TextAdapter(this, items);
-        gridView.setAdapter(adapter);//表示
+        listView.setAdapter(adapter);//表示
     }
 
     private void getPhoto() {
@@ -170,21 +163,13 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
             case REQ_NEW_TITLE:
                 if (resCode == RESULT_OK) {
                     String title = data.getStringExtra(TextsOpenHelper.COLUMN_NAME_TITLE);
-                    Uri image_uri = Uri.parse(data.getStringExtra("image_URI"));
-
                     String text = data.getStringExtra(TextsOpenHelper.COLUMN_NAME_TEXT);
-                    Rect r = new Rect(
-                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_STARTX,0),
-                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_STARTY,0),
-                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_ENDX,0),
-                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_ENDY,0)
-                    );
                     int time = data.getIntExtra(TextsOpenHelper.COLUMN_NAME_TIME, 0);
                     Log.d("New Title", title);
-                    if (image_uri != null && !title.isEmpty() && !text.isEmpty()) {
+                    if (!title.isEmpty() && !text.isEmpty()) {
                         TextDBAdapter dbAdapter = new TextDBAdapter(this);
                         dbAdapter.openDB();
-                        dbAdapter.saveDB(title, image_uri, text, time, r);
+                        dbAdapter.saveDB(title, text, time);
                         dbAdapter.closeDB();
                         setGridView();
                         Toast.makeText(this, "新しいテキストが追加されました。", Toast.LENGTH_SHORT).show();

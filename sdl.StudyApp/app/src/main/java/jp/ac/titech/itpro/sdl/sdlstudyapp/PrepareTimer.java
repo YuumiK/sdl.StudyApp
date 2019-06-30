@@ -1,12 +1,15 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -22,6 +25,10 @@ public class PrepareTimer extends AppCompatActivity {
     CountDown countDown;
     private SimpleDateFormat dataFormat =
             new SimpleDateFormat("mm:ss", Locale.US);
+
+    //音声
+    private SoundPool mSoundPool;
+    private int mSoundId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,9 @@ public class PrepareTimer extends AppCompatActivity {
                 }
             }
         });
+
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        mSoundId = mSoundPool.load(getApplicationContext(),R.raw.wolveshowling, 0);
     }
 
     private CountDown getTimer(long millisec){
@@ -73,7 +83,6 @@ public class PrepareTimer extends AppCompatActivity {
 
     class CountDown extends CountDownTimer {
 
-        private boolean isPaused;
         CountDown(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
         }
@@ -81,6 +90,8 @@ public class PrepareTimer extends AppCompatActivity {
         @Override
         public void onFinish() {
             time.setText(dataFormat.format(0));
+            Toast.makeText(PrepareTimer.this, "Time is up!", Toast.LENGTH_SHORT).show();
+            mSoundPool.play(mSoundId, 1.0F, 1.0F, 0, 0, 1.0F);
             start.setText(TIMER_START);
         }
 

@@ -18,7 +18,7 @@ public class TextAdapter extends BaseAdapter {
     private ArrayList<Text> texts;
 
     public class ViewHolder{
-        ImageView imageView;
+        TextView titleView;
         TextView textView;
     }
 
@@ -62,20 +62,16 @@ public class TextAdapter extends BaseAdapter {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.text_list, parent, false);
             holder = new TextAdapter.ViewHolder();
-            holder.imageView = view.findViewById(R.id.image_view_prepare);
+            holder.titleView = view.findViewById(R.id.title_view_prepare);
             holder.textView = view.findViewById(R.id.text_view_prepare);
             view.setTag(holder);
         } else {
             holder = (TextAdapter.ViewHolder) view.getTag();
         }
 
-        try {
-            holder.imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(),texts.get(position).getPictsUri()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        holder.textView.setText(texts.get(position).getTitle());
 
+        holder.titleView.setText(texts.get(position).getTitle());
+        holder.textView.setText((texts.get(position).getText().substring(0,30) + "..."));
         return view;
     }
 }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     >
 
-    <GridView
+    <ListView
         android:id="@+id/grid_prepare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +27,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:text="@string/add_review"
-        android:textSize="20dp"
+        android:textSize="40dp"
         android:textColor="@color/colorWhite"
         />
 </RelativeLayout>

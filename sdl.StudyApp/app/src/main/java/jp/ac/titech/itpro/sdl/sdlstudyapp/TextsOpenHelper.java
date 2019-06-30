@@ -7,29 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class TextsOpenHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "TextsData.db";
-    protected static final String TABLE_NAME = "TextsDatadb";
+    public static final String DATABASE_NAME = "TextsList.db";
+    protected static final String TABLE_NAME = "Textslistdb";
     protected static final String _ID = "_id";
     protected static final String COLUMN_NAME_TITLE = "title";
-    protected static final String COLUMN_NAME_PICTURE = "picture";
     protected static final String COLUMN_NAME_TEXT = "text";
     protected static final String COLUMN_NAME_TIME = "time";
-    protected static final String COLUMN_NAME_STARTX = "startx";
-    protected static final String COLUMN_NAME_STARTY = "starty";
-    protected static final String COLUMN_NAME_ENDX = "endx";
-    protected static final String COLUMN_NAME_ENDY = "endy";
 
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     _ID + " INTEGER PRIMARY KEY," +
                     COLUMN_NAME_TITLE + " TEXT," +
-                    COLUMN_NAME_PICTURE + " TEXT," +
                     COLUMN_NAME_TEXT + " TEXT," +
-                    COLUMN_NAME_STARTX + " INTEGER,"  +
-                    COLUMN_NAME_STARTY + " INTEGER," +
-                    COLUMN_NAME_ENDX+ " INTEGER," +
-                    COLUMN_NAME_ENDY + " INTEGER," +
                     COLUMN_NAME_TIME + " INTEGER)";
 
     private static final String SQL_DELETE_ENTRIES =

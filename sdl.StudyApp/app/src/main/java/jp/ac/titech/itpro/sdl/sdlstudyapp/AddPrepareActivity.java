@@ -50,7 +50,7 @@ public class AddPrepareActivity extends AppCompatActivity {
     private Uri image_uri;
     private EditText titleEdit;
     private EditText timeEdit;
-    private TextView textView;
+    private EditText textEdit;
     private Button add;
     private Rect textRect;
 
@@ -61,12 +61,12 @@ public class AddPrepareActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_circular);
         titleEdit = findViewById(R.id.title_prepare_add);
         timeEdit = findViewById(R.id.time_prepare_add);
-        textView = findViewById(R.id.text_prepare_add);
+        textEdit = findViewById(R.id.text_prepare_add);
 
         progressBar.setVisibility(ProgressBar.VISIBLE);
         titleEdit.setVisibility(EditText.INVISIBLE);
         timeEdit.setVisibility(EditText.INVISIBLE);
-        textView.setVisibility(TextView.INVISIBLE);
+        textEdit.setVisibility(TextView.INVISIBLE);
         add = findViewById(R.id.OK_add_prepare);
         add.setVisibility(Button.INVISIBLE);
         image_uri = Uri.parse(getIntent().getStringExtra("image_URI"));
@@ -77,17 +77,12 @@ public class AddPrepareActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String title = titleEdit.getText().toString().trim();
-                String text = textView.getText().toString();
+                String text = textEdit.getText().toString();
                 int time = Integer.valueOf(timeEdit.getText().toString().trim());
                 if (!text.isEmpty() && !title.isEmpty()) {
                     Intent data = new Intent();
                     data.putExtra(TextsOpenHelper.COLUMN_NAME_TITLE, title);
-                    data.putExtra("image_URI", image_uri.toString());
                     data.putExtra(TextsOpenHelper.COLUMN_NAME_TEXT, text);
-                    data.putExtra(TextsOpenHelper.COLUMN_NAME_STARTX,textRect.left);
-                    data.putExtra(TextsOpenHelper.COLUMN_NAME_STARTY,textRect.top);
-                    data.putExtra(TextsOpenHelper.COLUMN_NAME_ENDX,textRect.right);
-                    data.putExtra(TextsOpenHelper.COLUMN_NAME_ENDY,textRect.bottom);
                     data.putExtra(TextsOpenHelper.COLUMN_NAME_TIME, time);
                     setResult(RESULT_OK, data);
                 } else {
@@ -117,7 +112,7 @@ public class AddPrepareActivity extends AppCompatActivity {
                                     progressBar.setVisibility(ProgressBar.INVISIBLE);
                                     titleEdit.setVisibility(EditText.VISIBLE);
                                     timeEdit.setVisibility(EditText.VISIBLE);
-                                    textView.setVisibility(TextView.VISIBLE);
+                                    textEdit.setVisibility(TextView.VISIBLE);
                                     add.setVisibility(Button.VISIBLE);
                                     setParameters(firebaseVisionDocumentText);
                                 }
@@ -177,7 +172,7 @@ public class AddPrepareActivity extends AppCompatActivity {
 
         if(textBlocks.size() == 1)
         {
-            textView.setText(textBlocks.get(0));
+            textEdit.setText(textBlocks.get(0));
             timeEdit.setText(String.valueOf(getStringLine(textBlocks.get(0))+5), TextView.BufferType.NORMAL);
             textRect = textRects.get(0);
         }
@@ -190,7 +185,7 @@ public class AddPrepareActivity extends AppCompatActivity {
                     .setItems(items, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            textView.setText(textBlocks.get(which));
+                            textEdit.setText(textBlocks.get(which));
                             timeEdit.setText(String.valueOf(getStringLine(textBlocks.get(which))+5), TextView.BufferType.NORMAL);
                             textRect = textRects.get(which);
                         }

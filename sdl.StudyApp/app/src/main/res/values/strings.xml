@@ -15,4 +15,5 @@
     <string name="time_prepare_add">Time</string>
     <string name="TIME_view_prepare">TIME!</string>
     <string name="cancel_timer">CANCEL</string>
+    <string name="PRINT_view_prepare">PRINT</string>
 </resources>

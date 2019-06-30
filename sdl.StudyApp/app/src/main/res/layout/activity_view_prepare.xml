@@ -42,12 +42,22 @@
 
         />
 
+    <Button
+        android:id="@+id/print_view_prepare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:text="@string/PRINT_view_prepare"
+        android:layout_alignLeft="@id/TIME_view_prepare"
+        android:layout_below="@id/TIME_view_prepare"
+        />
+
     <TextView
         android:id="@+id/text_prepare_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/TIME_view_prepare"
-        android:layout_alignLeft="@+id/title_prepare_view"
+        android:layout_below="@id/print_view_prepare"
+        android:layout_alignLeft="@id/title_prepare_view"
         android:text="aaa"
        />
 

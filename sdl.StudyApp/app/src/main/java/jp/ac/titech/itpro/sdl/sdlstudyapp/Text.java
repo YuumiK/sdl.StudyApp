@@ -8,25 +8,20 @@ import android.util.Log;
 public class Text {
     protected int id;           // ID
     protected String title;     // 名称
-    protected Uri pict_uri;     //写真
     protected String text;      // 文章
     protected int time; //時間
-    protected Rect range;
     /**
      * MyListItem()
      *
      * @param id      int ID
      * @param title   String 名称
-     * @param pict_uri Uri 写真
      * @param text    String 文章
      * @param time    int 時間
      */
-     public Text(int id, String title, Uri pict_uri, String text,  Rect range, int time) {
+     public Text(int id, String title, String text, int time) {
         this.id = id;
         this.title = title;
-        this.pict_uri = pict_uri;
         this.text = text;
-        this.range = range;
         this.time = time;
      }
 
@@ -51,15 +46,6 @@ public class Text {
         return title;
     }
 
-    /**
-     * 写真のURIを取得
-     * getPictsUri()
-     *
-     * @return pict_uri Uri 写真
-     */
-    public Uri getPictsUri(){
-        return pict_uri;
-    }
 
     /**
      * 文章を取得
@@ -81,8 +67,4 @@ public class Text {
         return time;
     }
 
-    public Rect getRect()
-    {
-        return range;
-    }
 }
