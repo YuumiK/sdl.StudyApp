@@ -59,6 +59,7 @@
         android:layout_below="@id/print_view_prepare"
         android:layout_alignLeft="@id/title_prepare_view"
         android:text="aaa"
+        android:textIsSelectable="true"
        />
 
 </RelativeLayout>

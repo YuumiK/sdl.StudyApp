@@ -16,4 +16,5 @@
     <string name="TIME_view_prepare">TIME!</string>
     <string name="cancel_timer">CANCEL</string>
     <string name="PRINT_view_prepare">PRINT</string>
+    <string name="weblio_URL">https://ejje.weblio.jp/content/</string>
 </resources>

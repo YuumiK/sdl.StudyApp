@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +22,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ViewPrepareActivity extends AppCompatActivity {
     private TextView title;
@@ -63,8 +71,7 @@ public class ViewPrepareActivity extends AppCompatActivity {
                 printIntent.putExtra("title", title.getText().toString());
                 startActivity(printIntent);
             }});
-
-
+        setSpannableString(getWindow().getDecorView());
     }
     private void setTimeText(int timeMin){
         time.setText(String.format("Goal:%d min.", timeMin));
@@ -80,5 +87,51 @@ public class ViewPrepareActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setSpannableString(View view) {
+
+        String[] part = text.getText().toString().split(" ");
+
+        Map<String, String> map = new HashMap<String, String>();
+        for(String s: part) map.put(s, R.string.weblio_URL+s);
+
+        SpannableString ss = createSpannableString(text.getText().toString(), map);
+
+        TextView textView = view.findViewById(R.id.text_prepare_view);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private SpannableString createSpannableString(String message, Map<String, String> map) {
+
+        SpannableString ss = new SpannableString(message);
+
+        for (final Map.Entry<String, String> entry : map.entrySet()) {
+            int start = 0;
+            int end = 0;
+
+            // リンク化対象の文字列の start, end を算出する
+            Pattern pattern = Pattern.compile(entry.getKey());
+            Matcher matcher = pattern.matcher(message);
+            while (matcher.find()) {
+                start = matcher.start();
+                end = matcher.end();
+                break;
+            }
+
+            // SpannableString にクリックイベント、パラメータをセットする
+            ss.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    String url = entry.getValue();
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            }, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+
+        return ss;
     }
 }
