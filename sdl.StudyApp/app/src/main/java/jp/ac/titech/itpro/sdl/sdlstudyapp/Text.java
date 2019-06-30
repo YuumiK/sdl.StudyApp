@@ -1,6 +1,7 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.util.Log;
 
@@ -10,7 +11,7 @@ public class Text {
     protected Uri pict_uri;     //写真
     protected String text;      // 文章
     protected int time; //時間
-
+    protected Rect range;
     /**
      * MyListItem()
      *
@@ -20,13 +21,14 @@ public class Text {
      * @param text    String 文章
      * @param time    int 時間
      */
-     public Text(int id, String title, Uri pict_uri, String text, int time) {
+     public Text(int id, String title, Uri pict_uri, String text,  Rect range, int time) {
         this.id = id;
         this.title = title;
         this.pict_uri = pict_uri;
         this.text = text;
+        this.range = range;
         this.time = time;
-    }
+     }
 
     /**
      * IDを取得
@@ -77,5 +79,10 @@ public class Text {
      */
     public int getTime() {
         return time;
+    }
+
+    public Rect getRect()
+    {
+        return range;
     }
 }

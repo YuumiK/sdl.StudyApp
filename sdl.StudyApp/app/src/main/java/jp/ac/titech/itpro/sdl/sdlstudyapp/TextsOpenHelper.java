@@ -14,6 +14,10 @@ public class TextsOpenHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_NAME_PICTURE = "picture";
     protected static final String COLUMN_NAME_TEXT = "text";
     protected static final String COLUMN_NAME_TIME = "time";
+    protected static final String COLUMN_NAME_STARTX = "startx";
+    protected static final String COLUMN_NAME_STARTY = "starty";
+    protected static final String COLUMN_NAME_ENDX = "endx";
+    protected static final String COLUMN_NAME_ENDY = "endy";
 
 
     private static final String SQL_CREATE_ENTRIES =
@@ -22,6 +26,10 @@ public class TextsOpenHelper extends SQLiteOpenHelper {
                     COLUMN_NAME_TITLE + " TEXT," +
                     COLUMN_NAME_PICTURE + " TEXT," +
                     COLUMN_NAME_TEXT + " TEXT," +
+                    COLUMN_NAME_STARTX + " INTEGER,"  +
+                    COLUMN_NAME_STARTY + " INTEGER," +
+                    COLUMN_NAME_ENDX+ " INTEGER," +
+                    COLUMN_NAME_ENDY + " INTEGER," +
                     COLUMN_NAME_TIME + " INTEGER)";
 
     private static final String SQL_DELETE_ENTRIES =

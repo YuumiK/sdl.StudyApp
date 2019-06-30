@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -101,7 +102,8 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
                         c.getString(1),
                         Uri.parse(c.getString(2)),
                         c.getString(3),
-                        c.getInt(4)
+                        new Rect(c.getInt(4),c.getInt(5),c.getInt(6),c.getInt(7)),
+                        c.getInt(8)
                 );
                 items.add(t);
             } while (c.moveToNext());
@@ -161,12 +163,18 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
                     Uri image_uri = Uri.parse(data.getStringExtra("image_URI"));
 
                     String text = data.getStringExtra(TextsOpenHelper.COLUMN_NAME_TEXT);
+                    Rect r = new Rect(
+                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_STARTX,0),
+                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_STARTY,0),
+                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_ENDX,0),
+                    data.getIntExtra(TextsOpenHelper.COLUMN_NAME_ENDY,0)
+                    );
                     int time = data.getIntExtra(TextsOpenHelper.COLUMN_NAME_TIME, 0);
                     Log.d("New Title", title);
                     if (image_uri != null && !title.isEmpty() && !text.isEmpty()) {
                         TextDBAdapter dbAdapter = new TextDBAdapter(this);
                         dbAdapter.openDB();
-                        dbAdapter.saveDB(title, image_uri, text, time);
+                        dbAdapter.saveDB(title, image_uri, text, time, r);
                         dbAdapter.closeDB();
                         setGridView();
                         Toast.makeText(this, "新しいテキストが追加されました。", Toast.LENGTH_SHORT).show();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.util.Log;
 
@@ -62,7 +63,7 @@ public class TextDBAdapter {
      * @param text 文章
      * @param time 時間
      */
-    public void saveDB(String title, Uri pict_uri, String text, int time) {
+    public void saveDB(String title, Uri pict_uri, String text, int time, Rect r) {
 
 
         db.beginTransaction();          // トランザクション開始
@@ -72,6 +73,10 @@ public class TextDBAdapter {
             values.put(TextsOpenHelper.COLUMN_NAME_TITLE, title);
             values.put(TextsOpenHelper.COLUMN_NAME_PICTURE, pict_uri.toString());
             values.put(TextsOpenHelper.COLUMN_NAME_TEXT, text);
+            values.put(TextsOpenHelper.COLUMN_NAME_STARTX, r.left);
+            values.put(TextsOpenHelper.COLUMN_NAME_STARTY, r.top);
+            values.put(TextsOpenHelper.COLUMN_NAME_ENDX, r.right);
+            values.put(TextsOpenHelper.COLUMN_NAME_ENDY, r.bottom);
             values.put(TextsOpenHelper.COLUMN_NAME_TIME, time);
 
             //重複がないか検索
