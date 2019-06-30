@@ -1,6 +1,7 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.content.Context;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TextAdapter extends BaseAdapter {
@@ -67,7 +69,11 @@ public class TextAdapter extends BaseAdapter {
             holder = (TextAdapter.ViewHolder) view.getTag();
         }
 
-        holder.imageView.setImageBitmap(texts.get(position).getPict());
+        try {
+            holder.imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(),texts.get(position).getPictsUri()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         holder.textView.setText(texts.get(position).getTitle());
 
         return view;

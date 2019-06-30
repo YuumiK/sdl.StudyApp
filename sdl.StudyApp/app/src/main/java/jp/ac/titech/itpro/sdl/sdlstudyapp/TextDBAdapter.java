@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 
@@ -56,15 +58,11 @@ public class TextDBAdapter {
      * saveDB()
      *
      * @param title 名称
-     * @param pict 写真
+     * @param pict_uri 写真
      * @param text 文章
      * @param time 時間
      */
-    public void saveDB(String title, Bitmap pict, String text, int time) {
-
-        ByteBuffer byteBuffer = ByteBuffer.allocate(pict.getByteCount());
-        pict.copyPixelsToBuffer(byteBuffer);
-        byte[] byte_pict = byteBuffer.array();
+    public void saveDB(String title, Uri pict_uri, String text, int time) {
 
 
         db.beginTransaction();          // トランザクション開始
@@ -72,17 +70,22 @@ public class TextDBAdapter {
         try {
             ContentValues values = new ContentValues();     // ContentValuesでデータを設定していく
             values.put(TextsOpenHelper.COLUMN_NAME_TITLE, title);
-            values.put(TextsOpenHelper.COLUMN_NAME_PICTURE, byte_pict);
+            values.put(TextsOpenHelper.COLUMN_NAME_PICTURE, pict_uri.toString());
             values.put(TextsOpenHelper.COLUMN_NAME_TEXT, text);
             values.put(TextsOpenHelper.COLUMN_NAME_TIME, time);
 
-            // insertメソッド データ登録
-            // 第1引数：DBのテーブル名
-            // 第2引数：更新する条件式
-            // 第3引数：ContentValues
-            db.insert(TextsOpenHelper.TABLE_NAME, null, values);      // レコードへ登録
-
+            //重複がないか検索
+            Cursor c = searchDB(null, TextsOpenHelper.COLUMN_NAME_TITLE, new String[]{title});
+            if(!c.moveToFirst()) {
+                // insertメソッド データ登録
+                // 第1引数：DBのテーブル名
+                // 第2引数：更新する条件式
+                // 第3引数：ContentValues
+                db.insert(TextsOpenHelper.TABLE_NAME, null, values);      // レコードへ登録
+            }
+            else throw new Exception("Overlapping");
             db.setTransactionSuccessful();      // トランザクションへコミット
+            Log.d("saveDB", "successful");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

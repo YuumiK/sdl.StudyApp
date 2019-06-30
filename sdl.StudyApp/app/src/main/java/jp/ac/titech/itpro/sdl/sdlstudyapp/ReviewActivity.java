@@ -1,10 +1,12 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.DeniedByServerException;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class ReviewActivity extends AppCompatActivity {
@@ -40,6 +44,7 @@ public class ReviewActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_review);
 
         dbAdapter = new MissDBAdapter(this);
+
         setListView();
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +70,40 @@ public class ReviewActivity extends AppCompatActivity {
 
         //リスト項目が長押しされた時
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String msg = position + "番目のアイテムが長押しされました";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                AlertDialog.Builder builder
+                        = new AlertDialog.Builder(ReviewActivity.this);
+                final NumberPicker numberPicker = new NumberPicker(ReviewActivity.this);
+                numberPicker.setMaxValue(Integer.MAX_VALUE);
+                numberPicker.setMinValue(0);
+
+                final int pos = position;
+                numberPicker.setValue(items.get(position).count);
+                builder.setMessage("間違い数を調整します。0の場合、項目が消滅します")
+                        .setTitle(items.get(position).title)
+                        .setView(numberPicker)
+                        .setPositiveButton("OK" , new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                int num = numberPicker.getValue();
+                                dbAdapter.openDB();
+                                if(num == 0){
+                                    Log.d("number picker", "0");
+                                    dbAdapter.selectDelete(items.get(pos).title);
+                                }
+                                else{
+                                    dbAdapter.update(items.get(pos).title, num);
+                                }
+                                dbAdapter.closeDB();
+                                setListView();
+                            }
+                        })
+                        .setNegativeButton("CANCEL", null)
+                        .show();
+
                 return false;
             }
         });
@@ -93,13 +129,15 @@ public class ReviewActivity extends AppCompatActivity {
         }
         c.close();
         dbAdapter.closeDB();
-
+        sortListView();
 
         //settings of ListView
         adapter = new MissAdapter(this, items);
         listView.setAdapter(adapter);//表示
     }
-
+    public void sortListView(){
+        Collections.sort(items, new MissComparatorByCount());
+    }
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
         switch (reqCode) {

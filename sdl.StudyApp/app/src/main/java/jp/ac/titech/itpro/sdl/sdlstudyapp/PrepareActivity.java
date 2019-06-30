@@ -92,17 +92,14 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
         //obtain DB data
         String[] cols = null;
         Cursor c = dbAdapter.getDB(cols);
+        Log.d("getCursor", "finish");
 
         if (c.moveToFirst()) {
             do {
-                //Blob to bitmap
-                byte[] byteArray = c.getBlob(2);
-                Bitmap pict = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
                 Text t = new Text(
                         c.getInt(0),
                         c.getString(1),
-                        pict,
+                        Uri.parse(c.getString(2)),
                         c.getString(3),
                         c.getInt(4)
                 );
@@ -160,12 +157,16 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
         switch (reqCode) {
             case REQ_NEW_TITLE:
                 if (resCode == RESULT_OK) {
-                    String name = data.getStringExtra(TextsOpenHelper.COLUMN_NAME_TITLE);
-                    Log.d("New Title", name);
-                    if (name != null && !name.isEmpty()) {
+                    String title = data.getStringExtra(TextsOpenHelper.COLUMN_NAME_TITLE);
+                    Uri image_uri = Uri.parse(data.getStringExtra("image_URI"));
+
+                    String text = data.getStringExtra(TextsOpenHelper.COLUMN_NAME_TEXT);
+                    int time = data.getIntExtra(TextsOpenHelper.COLUMN_NAME_TIME, 0);
+                    Log.d("New Title", title);
+                    if (image_uri != null && !title.isEmpty() && !text.isEmpty()) {
                         TextDBAdapter dbAdapter = new TextDBAdapter(this);
                         dbAdapter.openDB();
-                        //dbAdapter.saveDB();
+                        dbAdapter.saveDB(title, image_uri, text, time);
                         dbAdapter.closeDB();
                         setGridView();
                         Toast.makeText(this, "新しいテキストが追加されました。", Toast.LENGTH_SHORT).show();
@@ -191,7 +192,7 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
                     contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
                     contentValues.put("_data", filepath);
                     contentResolver.insert(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                 }
                 if(resultUri == null) return;
 

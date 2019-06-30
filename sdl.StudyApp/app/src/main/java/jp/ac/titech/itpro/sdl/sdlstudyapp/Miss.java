@@ -2,6 +2,9 @@ package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.util.Log;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Miss {
     protected int id;           // ID
     protected String title;     // 名称
@@ -51,5 +54,12 @@ public class Miss {
         return count;
     }
 
+}
 
+class MissComparatorByCount implements Comparator<Miss> {
+
+    @Override
+    public int compare(Miss m1, Miss m2) {
+        return m1.count > m2.count ? -1 : 1;
+    }
 }

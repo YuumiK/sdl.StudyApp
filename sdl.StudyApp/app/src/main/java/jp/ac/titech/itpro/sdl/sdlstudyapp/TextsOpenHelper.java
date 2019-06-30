@@ -20,7 +20,7 @@ public class TextsOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     _ID + " INTEGER PRIMARY KEY," +
                     COLUMN_NAME_TITLE + " TEXT," +
-                    COLUMN_NAME_PICTURE + " BLOB NOT NULL," +
+                    COLUMN_NAME_PICTURE + " TEXT," +
                     COLUMN_NAME_TEXT + " TEXT," +
                     COLUMN_NAME_TIME + " INTEGER)";
 

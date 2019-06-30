@@ -1,12 +1,13 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 
 public class Text {
     protected int id;           // ID
     protected String title;     // 名称
-    protected Bitmap pict;     //写真
+    protected Uri pict_uri;     //写真
     protected String text;      // 文章
     protected int time; //時間
 
@@ -15,14 +16,14 @@ public class Text {
      *
      * @param id      int ID
      * @param title   String 名称
-     * @param pict   Bitmap 写真
+     * @param pict_uri Uri 写真
      * @param text    String 文章
      * @param time    int 時間
      */
-     public Text(int id, String title, Bitmap pict, String text, int time) {
+     public Text(int id, String title, Uri pict_uri, String text, int time) {
         this.id = id;
         this.title = title;
-        this.pict = pict;
+        this.pict_uri = pict_uri;
         this.text = text;
         this.time = time;
     }
@@ -49,13 +50,13 @@ public class Text {
     }
 
     /**
-     * 写真を取得
-     * getPicts()
+     * 写真のURIを取得
+     * getPictsUri()
      *
-     * @return pict Bitmap 写真
+     * @return pict_uri Uri 写真
      */
-    public Bitmap getPict(){
-        return pict;
+    public Uri getPictsUri(){
+        return pict_uri;
     }
 
     /**
