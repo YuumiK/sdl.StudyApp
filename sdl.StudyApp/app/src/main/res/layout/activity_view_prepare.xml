@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/title_prepare_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time_prepare_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_prepare_view"
+        android:layout_alignLeft="@+id/title_prepare_view"
+        android:layout_marginLeft="0dp"
+        android:clickable="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_toEndOf="@id/title_prepare_view"
+        android:layout_toRightOf="@id/title_prepare_view"
+        />
+
+
+    <Button
+        android:id="@+id/TIME_view_prepare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:text="@string/TIME_view_prepare"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/time_prepare_view"
+        app:layout_constraintLeft_toRightOf="@id/time_prepare_view"
+
+        />
+
+    <TextView
+        android:id="@+id/text_prepare_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TIME_view_prepare"
+        android:layout_alignLeft="@+id/title_prepare_view"
+        android:text="aaa"
+       />
+
+</RelativeLayout>

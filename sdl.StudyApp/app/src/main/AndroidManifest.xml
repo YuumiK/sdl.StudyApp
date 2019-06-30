@@ -37,6 +37,8 @@
         <activity android:name=".ReviewActivity" />
         <activity android:name=".AddReviewActivity" />
         <activity android:name=".AddPrepareActivity" />
+        <activity android:name=".ViewPrepareActivity" />
+        <activity android:name=".PrepareTimer" />
 
     </application>
 

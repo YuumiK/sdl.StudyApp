@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class TextsOpenHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Texts.db";
-    protected static final String TABLE_NAME = "Textsdb";
+    public static final String DATABASE_NAME = "TextsData.db";
+    protected static final String TABLE_NAME = "TextsDatadb";
     protected static final String _ID = "_id";
     protected static final String COLUMN_NAME_TITLE = "title";
     protected static final String COLUMN_NAME_PICTURE = "picture";

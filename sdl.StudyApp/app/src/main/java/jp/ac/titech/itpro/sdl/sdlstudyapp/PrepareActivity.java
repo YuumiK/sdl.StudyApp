@@ -61,8 +61,18 @@ public class PrepareActivity extends AppCompatActivity implements AdapterView.On
     //when the item on the grid is clicked
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //Intent intent = new Intent(getApplication(), SubActivity.class);
-        //startActivity( intent );
+        Intent intent = new Intent(PrepareActivity.this, ViewPrepareActivity.class);
+        Text selected = items.get(position);
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_TITLE, selected.getTitle());
+        intent.putExtra("image_URI", selected.getPictsUri().toString());
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_TEXT, selected.getText());
+        Rect textRect = selected.getRect();
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_STARTX,textRect.left);
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_STARTY,textRect.top);
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_ENDX,textRect.right);
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_ENDY,textRect.bottom);
+        intent.putExtra(TextsOpenHelper.COLUMN_NAME_TIME, selected.getTime());
+        startActivity(intent);
     }
 
     @Override

@@ -62,6 +62,7 @@ public class TextDBAdapter {
      * @param pict_uri 写真
      * @param text 文章
      * @param time 時間
+     * @param r Rect
      */
     public void saveDB(String title, Uri pict_uri, String text, int time, Rect r) {
 

@@ -13,4 +13,6 @@
     <string name="add_prepare">+</string>
     <string name="title_prepare_add">Title</string>
     <string name="time_prepare_add">Time</string>
+    <string name="TIME_view_prepare">TIME!</string>
+    <string name="cancel_timer">CANCEL</string>
 </resources>
