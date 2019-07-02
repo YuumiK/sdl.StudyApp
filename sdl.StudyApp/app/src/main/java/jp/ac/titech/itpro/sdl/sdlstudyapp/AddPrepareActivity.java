@@ -34,6 +34,8 @@ import java.util.List;
 
 public class AddPrepareActivity extends AppCompatActivity {
 
+    private static final int ADD_TIME = 5;
+    private static final int NUM_OF_DISPLAY_CHARS_IN_SELECTOR = 20;
     protected ProgressBar progressBar;
     private Bitmap bmp;
     private Uri image_uri;
@@ -141,11 +143,11 @@ public class AddPrepareActivity extends AppCompatActivity {
         if(textBlocks.size() == 1)
         {
             textEdit.setText(textBlocks.get(0));
-            timeEdit.setText(String.valueOf(getStringLine(textBlocks.get(0))+5), TextView.BufferType.NORMAL);
+            timeEdit.setText(String.valueOf(getStringLine(textBlocks.get(0))+ADD_TIME), TextView.BufferType.NORMAL);
         }
         else{
             List<String> list = new ArrayList<>();
-            for (String text:textBlocks) list.add(text.substring(0,9));
+            for (String text:textBlocks) list.add(text.substring(0,NUM_OF_DISPLAY_CHARS_IN_SELECTOR));
             final String[] items = list.toArray(new String[0]);
             new AlertDialog.Builder(this)
                     .setTitle("Selector")

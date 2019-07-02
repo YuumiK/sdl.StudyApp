@@ -144,26 +144,7 @@ public class TextDBAdapter {
         }
     }
 
-    /**
-     * DBのレコードを更新. nameで検索し、countの値を上書きする。
-     * update()
-     *
-     * @param name String
-     *
-    public void update(String name, int count) {
 
-        db.beginTransaction();                      // トランザクション開始
-        try {
-            ContentValues val = new ContentValues();
-            val.put(TextsOpenHelper.COLUMN_NAME_COUNT, count);
-            db.update(TextsOpenHelper.TABLE_NAME, val, TextsOpenHelper.COLUMN_NAME_TITLE +"=?", new String[]{name}); // DBのレコードの中身を更新
-            db.setTransactionSuccessful();          // トランザクションへコミット
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            db.endTransaction();                    // トランザクションの終了
-        }
-    }*/
 
     /**
      * DBのレコードの単一削除
