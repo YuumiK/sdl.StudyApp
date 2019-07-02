@@ -1,6 +1,5 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;

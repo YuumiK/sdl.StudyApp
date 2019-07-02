@@ -4,18 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.Rect;
-import android.net.Uri;
 import android.util.Log;
-
-import java.nio.ByteBuffer;
-import java.util.Locale;
 
 public class TextDBAdapter {
 
     private SQLiteDatabase db = null;           // SQLiteDatabase
-    private TextsOpenHelper dbHelper = null;   // DBHelper
+    private TextsOpenHelper dbHelper;   // DBHelper
     protected Context context;                  // Context
 
     // コンストラクタ

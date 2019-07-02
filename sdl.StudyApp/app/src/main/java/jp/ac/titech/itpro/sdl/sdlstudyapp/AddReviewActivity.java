@@ -9,8 +9,11 @@ import android.widget.EditText;
 
 public class AddReviewActivity extends AppCompatActivity {
 
-    EditText editText;
-    Button add;
+    private static final String TITECH = "東工大";
+    private static final String PASS = "合格!!!";
+
+    private EditText editText;
+    private Button add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,9 @@ public class AddReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = editText.getText().toString().trim();
                 if (!name.isEmpty()) {
+                    if(name.equals(TITECH)){
+                        name = PASS;
+                    }
                     Intent data = new Intent();
                     data.putExtra(MissesOpenHelper.COLUMN_NAME_TITLE, name);
                     setResult(RESULT_OK, data);

@@ -3,17 +3,12 @@ package jp.ac.titech.itpro.sdl.sdlstudyapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.DeniedByServerException;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,8 +23,8 @@ public class ReviewActivity extends AppCompatActivity {
 
     private final static int REQ_NEW_TITLE = 1234;
 
-    ArrayList<Miss> items;
-    BaseAdapter adapter;
+    private ArrayList<Miss> items;
+    private BaseAdapter adapter;
     private MissDBAdapter dbAdapter;
 
     private Button add;
@@ -59,8 +54,8 @@ public class ReviewActivity extends AppCompatActivity {
         //リスト項目が選択された時
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = items.get(position).title;
-                int count = items.get(position).count + 1;
+                String name = items.get(position).getTitle();
+                int count = items.get(position).getCount() + 1;
                 dbAdapter.openDB();
                 dbAdapter.update(name, count);
                 dbAdapter.closeDB();
@@ -79,9 +74,9 @@ public class ReviewActivity extends AppCompatActivity {
                 numberPicker.setMinValue(0);
 
                 final int pos = position;
-                numberPicker.setValue(items.get(position).count);
+                numberPicker.setValue(items.get(position).getCount());
                 builder.setMessage("間違い数を調整します。0の場合、項目が消滅します")
-                        .setTitle(items.get(position).title)
+                        .setTitle(items.get(position).getTitle())
                         .setView(numberPicker)
                         .setPositiveButton("OK" , new DialogInterface.OnClickListener() {
 
@@ -92,10 +87,10 @@ public class ReviewActivity extends AppCompatActivity {
                                 dbAdapter.openDB();
                                 if(num == 0){
                                     Log.d("number picker", "0");
-                                    dbAdapter.selectDelete(items.get(pos).title);
+                                    dbAdapter.selectDelete(items.get(pos).getTitle());
                                 }
                                 else{
-                                    dbAdapter.update(items.get(pos).title, num);
+                                    dbAdapter.update(items.get(pos).getTitle(), num);
                                 }
                                 dbAdapter.closeDB();
                                 setListView();
@@ -153,8 +148,6 @@ public class ReviewActivity extends AppCompatActivity {
                         setListView();
                         Toast.makeText(this, "新しい間違いのタイプが追加されました。", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
                 }
                 break;
         }

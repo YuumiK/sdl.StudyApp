@@ -1,15 +1,12 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
-import android.graphics.Bitmap;
-import android.graphics.Rect;
-import android.net.Uri;
 import android.util.Log;
 
 public class Text {
-    protected int id;           // ID
-    protected String title;     // 名称
-    protected String text;      // 文章
-    protected int time; //時間
+    private int id;           // ID
+    private String title;     // 名称
+    private String text;      // 文章
+    private int time; //時間
     /**
      * MyListItem()
      *

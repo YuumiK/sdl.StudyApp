@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+//from https://developers.google.com/cloud-print/docs/android
 public class PrintDialogActivity extends Activity {
     private static final String PRINT_DIALOG_URL = "https://www.google.com/cloudprint/dialog.html";
     private static final String JS_INTERFACE = "AndroidPrintDialog";

@@ -1,14 +1,12 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.util.Log;
-
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Miss {
-    protected int id;           // ID
-    protected String title;     // 名称
-    protected int count;        // 回数
+    private int id;           // ID
+    private String title;     // 名称
+    private int count;        // 回数
 
     /**
      * MyListItem()
@@ -60,6 +58,8 @@ class MissComparatorByCount implements Comparator<Miss> {
 
     @Override
     public int compare(Miss m1, Miss m2) {
-        return m1.count > m2.count ? -1 : 1;
+        if(m1.getCount() > m2.getCount()) return -1;
+        else if(m1.getCount() == m2.getCount()) return 0;
+        return 1;
     }
 }

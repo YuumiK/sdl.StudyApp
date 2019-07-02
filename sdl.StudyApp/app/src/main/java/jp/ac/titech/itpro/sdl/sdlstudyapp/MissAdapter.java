@@ -19,11 +19,7 @@ public class MissAdapter extends BaseAdapter {
         TextView count;
     }
 
-    MissAdapter(Context context){
-        super();
-        this.context = context;
-        inflater = LayoutInflater.from(context);
-    }
+
     public MissAdapter(Context context, ArrayList<Miss> misses) {
         this.context = context;
         inflater = LayoutInflater.from(context);

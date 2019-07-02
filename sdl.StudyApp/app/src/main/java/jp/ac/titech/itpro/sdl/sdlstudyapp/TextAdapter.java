@@ -1,15 +1,12 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
 import android.content.Context;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class TextAdapter extends BaseAdapter {
@@ -22,11 +19,6 @@ public class TextAdapter extends BaseAdapter {
         TextView textView;
     }
 
-    TextAdapter(Context context){
-        super();
-        this.context = context;
-        inflater = LayoutInflater.from(context);
-    }
     public TextAdapter(Context context, ArrayList<Text> texts) {
         this.context = context;
         inflater = LayoutInflater.from(context);

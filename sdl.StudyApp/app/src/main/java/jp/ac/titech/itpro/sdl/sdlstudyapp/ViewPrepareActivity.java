@@ -1,6 +1,5 @@
 package jp.ac.titech.itpro.sdl.sdlstudyapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,16 +18,13 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ViewPrepareActivity extends AppCompatActivity {
+    private static final String WEBLIO_URL = "https://ejje.weblio.jp/content/";
     private TextView title;
     private TextView time;
     private Button Timer;
@@ -76,11 +72,12 @@ public class ViewPrepareActivity extends AppCompatActivity {
     private void setTimeText(int timeMin){
         time.setText(String.format("Goal:%d min.", timeMin));
     }
+
     public void saveFile(String filePath, String str) {
         File file = new File(filePath);
         file.getParentFile().mkdir();
         try (FileOutputStream fileOutputstream = new FileOutputStream(file,
-                true);){
+                false)){
 
             fileOutputstream.write(str.getBytes());
 
@@ -93,14 +90,25 @@ public class ViewPrepareActivity extends AppCompatActivity {
 
         String[] part = text.getText().toString().split(" ");
 
-        Map<String, String> map = new HashMap<String, String>();
-        for(String s: part) map.put(s, R.string.weblio_URL+s);
+        Map<String, String> map = new HashMap<>();
+        for(String s: part){
+            String sclens = cleanseWord(s);
+            map.put(sclens, WEBLIO_URL+sclens);
+        }
 
         SpannableString ss = createSpannableString(text.getText().toString(), map);
 
         TextView textView = view.findViewById(R.id.text_prepare_view);
         textView.setText(ss);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private String cleanseWord(String s){
+        return s.replace(",", "")
+                .replace(".", "")
+                .replace(",", "")
+                .replace(":", "")
+                .replace(";", "");
     }
 
     private SpannableString createSpannableString(String message, Map<String, String> map) {
